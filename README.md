@@ -6,3 +6,5 @@ secret=s33kr1t
 ```
 
 Run `make.php` to build the application.
+
+Based on https://gist.github.com/GaryRogers/735159ca0dd22621c638
