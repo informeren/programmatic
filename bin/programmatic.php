@@ -44,8 +44,9 @@ if (!empty($results->data)) {
                 'title' => $article->title,
                 'url' => $article->url,
             ];
+
+            $count++;
         }
-        $count++;
     }
 }
 
