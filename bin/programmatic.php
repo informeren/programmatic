@@ -19,6 +19,7 @@ $response = $client->request('GET', 'realtime/posts', [
         'secret' => $config['secret'],
         'time' => '24h',
         'tag' => 'Ikke paywall',
+        'limit' => 20,
     ],
 ]);
 
@@ -35,15 +36,21 @@ $results = json_decode($body);
 $top_three = [];
 if (!empty($results->data)) {
     $count = 0;
+    $seen = [];
     foreach ($results->data as $article) {
         if ($count > 2) {
             break;
+        }
+        if ('Debat' == $article->section || !empty($seen[$article->title])) {
+          continue;
         }
         if (strlen(utf8_decode($article->title)) > 20) {
             $top_three[] = [
                 'title' => $article->title,
                 'url' => $article->url,
             ];
+
+            $seen[$article->title] = TRUE;
 
             $count++;
         }
