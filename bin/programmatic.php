@@ -19,7 +19,7 @@ $response = $client->request('GET', 'realtime/posts', [
         'secret' => $config['secret'],
         'time' => '24h',
         'tag' => 'Ikke paywall',
-        'limit' => 20,
+        'limit' => 25,
     ],
 ]);
 
@@ -44,7 +44,10 @@ if (!empty($results->data)) {
         if ('Debat' == $article->section || !empty($seen[$article->title])) {
           continue;
         }
-        if (strlen(utf8_decode($article->title)) > 20) {
+
+        $title_length = strlen(utf8_decode($article->title));
+
+        if ($title_length > 20 && $title_length < 80) {
             $top_three[] = [
                 'title' => $article->title,
                 'url' => $article->url,
